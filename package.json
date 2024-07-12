@@ -4,14 +4,14 @@
   "main": "calculator.js",
   "scripts": {
     "start": "node calculator.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "pm2-start": "pm2 start calculator.js --name calculator"
   },
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
     "body-parser": "^1.20.2",
-    "express": "^4.19.2"
+    "express": "^4.19.2",
     "pm2": "^5.1.2"
   }
 }
