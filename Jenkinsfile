@@ -24,12 +24,7 @@ pipeline {
                 script {
                     // Kill any process running on port 3000
                     sh 'fuser -k 3000/tcp || true'
-                    
-                    // Start your Node.js application and redirect output to a log file
-                    sh 'nohup npm start > app.log 2>&1 &'
-                    
-                    // Give the application some time to start
-                    sleep 100000
+                    sh 'nohup npm start &'
                 }
             }
             
@@ -48,13 +43,6 @@ pipeline {
                     echo 'Failed to start the application!'
                 }
             }
-        }
-    }
-    
-    post {
-        always {
-            // Archive the log file regardless of success or failure
-            archiveArtifacts artifacts: 'app.log', allowEmptyArchive: true
         }
     }
 }
