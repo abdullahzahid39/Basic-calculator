@@ -21,22 +21,26 @@ pipeline {
         
         stage('Start Application') {
             steps {
-                // Ensure any previously running instances are stopped
-                sh 'pkill node || true'
-                // Start your Node.js application
-                sh 'nohup npm start &'
+                script {
+                    // Kill any process running on port 3000
+                    sh 'fuser -k 3000/tcp || true'
+                    
+                    // Start your Node.js application and redirect output to a log file
+                    sh 'nohup npm start > app.log 2>&1 &'
+                    
+                    // Give the application some time to start
+                    sleep 10
+                }
             }
             
             post {
                 success {
-                    echo 'Application is up and running!'
-                    // Optionally verify the application is running by making a request
                     script {
-                        def response = sh(script: 'curl -s -o /dev/null -w "%{http_code}" http://localhost:3000', returnStdout: true).trim()
-                        if (response == '200') {
-                            echo 'Application is accessible at http://localhost:3000'
+                        def responseCode = sh(script: "curl -s -o /dev/null -w '%{http_code}' http://localhost:3000", returnStdout: true).trim()
+                        if (responseCode == '200') {
+                            echo 'Application is up and running and accessible!'
                         } else {
-                            error('Application is not accessible')
+                            error('Application failed to start or is not accessible!')
                         }
                     }
                 }
@@ -44,6 +48,13 @@ pipeline {
                     echo 'Failed to start the application!'
                 }
             }
+        }
+    }
+    
+    post {
+        always {
+            // Archive the log file regardless of success or failure
+            archiveArtifacts artifacts: 'app.log', allowEmptyArchive: true
         }
     }
 }
