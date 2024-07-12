@@ -23,7 +23,7 @@ pipeline {
             steps {
                 script {
                     
-                    sh 'nohup npm start &'
+                    sh 'npm start' 
                 }
             }
             
