@@ -10,8 +10,8 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                // Checkout the code from your GitHub repository
-                git 'https://github.com/abdullahzahid39/Basic-calculator.git'
+                // Checkout the code from the main branch of your GitHub repository
+                git branch: 'main', url: 'https://github.com/abdullahzahid39/Basic-calculator.git'
             }
         }
         
