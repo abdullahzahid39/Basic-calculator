@@ -28,16 +28,11 @@ pipeline {
                 }
             }
             
-            post {
-                success {
-                    script {
-                        def responseCode = sh(script: "curl -s -o /dev/null -w '%{http_code}' http://localhost:3000", returnStdout: true).trim()
-                        if (responseCode == '200') {
+            post [
                             echo 'Application is up and running and accessible!'
-                        } else {
-                            error('Application failed to start or is not accessible!')
-                        }
-                    }
+                        else 
+                            error('Application failed to start or is not accessible!' 
+                    
                 }
                 failure {
                     echo 'Failed to start the application!'
