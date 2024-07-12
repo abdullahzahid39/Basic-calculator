@@ -16,14 +16,14 @@ pipeline {
         stage('Install Dependencies') {
             steps {
                 sh 'npm install'
+                sh 'npm install -g pm2' // Install PM2 globally
             }
         }
         
         stage('Start Application') {
             steps {
                 script {
-                    
-                    sh 'npm start' 
+                    sh 'pm2 start npm --name "basic-calculator" -- start'
                 }
             }
             
