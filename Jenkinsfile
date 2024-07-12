@@ -22,8 +22,6 @@ pipeline {
         stage('Start Application') {
             steps {
                 script {
-                    // Kill any process running on port 3000
-                    sh 'fuser -k 3000/tcp || true'
                     sh 'nohup npm start &'
                 }
             }
