@@ -29,7 +29,7 @@ pipeline {
                     sh 'nohup npm start > app.log 2>&1 &'
                     
                     // Give the application some time to start
-                    sleep 10
+                    sleep 100000
                 }
             }
             
