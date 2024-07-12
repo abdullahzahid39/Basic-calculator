@@ -16,20 +16,19 @@ pipeline {
         stage('Install Dependencies') {
             steps {
                 sh 'npm install'
-                sh 'npm install -g pm2' // Install PM2 globally
             }
         }
         
         stage('Start Application') {
             steps {
                 script {
-                    sh 'pm2 start npm --name "basic-calculator" -- start'
+                    sh 'nohup npm start &'
                 }
             }
             
             post {
                 success {
-                    echo 'Application is up and running'
+                    echo 'Application is up and running in the background'
                 }
                 failure {
                     error('Application failed to start or is not accessible!')
