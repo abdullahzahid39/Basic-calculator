@@ -28,14 +28,12 @@ pipeline {
                 }
             }
             
-            post [
-                            echo 'Application is up and running and accessible!'
-                        else 
-                            error('Application failed to start or is not accessible!' 
-                    
+            post {
+                success {
+                    echo 'Application is up and running and accessible!'
                 }
                 failure {
-                    echo 'Failed to start the application!'
+                    error('Application failed to start or is not accessible!')
                 }
             }
         }
