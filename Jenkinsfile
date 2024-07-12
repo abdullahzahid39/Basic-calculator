@@ -22,9 +22,7 @@ pipeline {
         stage('Start Application') {
             steps {
                 script {
-                    // Kill any existing process running the application
                     sh 'pm2 delete calculator || true'
-                    // Start the application using PM2
                     sh 'npm run pm2-start'
                 }
             }
