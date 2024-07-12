@@ -22,14 +22,14 @@ pipeline {
         stage('Start Application') {
             steps {
                 script {
-                    sh 'pm2 delete calculator || true'
-                    sh 'npm run pm2-start'
+                    
+                    sh 'nohup npm start &'
                 }
             }
             
             post {
                 success {
-                    echo 'Application is up and running and accessible!'
+                    echo 'Application is up and running'
                 }
                 failure {
                     error('Application failed to start or is not accessible!')
