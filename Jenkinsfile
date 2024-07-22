@@ -21,16 +21,15 @@ pipeline {
 
         stage('Start Application with PM2') {
             steps {
-                sh 'npm install -g pm2' // Install PM2 globally if not already installed
-                sh 'pm2 start npm -- start'
+                sh 'npm  start'
             }
 
             post {
                 success {
-                    echo 'Application started with PM2'
+                    echo 'Application started '
                 }
                 failure {
-                    error('Failed to start application with PM2')
+                    error('Failed to start application')
                 }
             }
         }
