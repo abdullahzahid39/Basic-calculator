@@ -13,20 +13,18 @@ pipeline {
             }
         }
 
-        stage('Install Dependencies') {
+    
+        stage('Build and Start Application with Docker Compose') {
             steps {
-                sh 'npm install'
-            }
-        }
-
-        stage('Start Application with PM2') {
-            steps {
-                sh 'npm  start'
+                script {
+                    sh 'docker-compose build'
+                    sh 'docker-compose up'
+                }
             }
 
             post {
                 success {
-                    echo 'Application started '
+                    echo 'Application is up and running in the background'
                 }
                 failure {
                     error('Failed to start application')
